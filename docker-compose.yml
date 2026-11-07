@@ -1,0 +1,121 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: shveya_postgres
+    restart: unless-stopped
+    mem_limit: 512m
+    mem_reservation: 256m
+    cpus: 0.5
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-shveya}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-shveya_pass_strong}
+      POSTGRES_DB: ${POSTGRES_DB:-shveya}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./мозг/03_TASKS/migrations:/migrations:ro
+      - ./backups:/backups
+    networks:
+      - shveya_net
+    command: >
+      postgres
+      -c shared_buffers=128MB
+      -c effective_cache_size=384MB
+      -c work_mem=4MB
+      -c maintenance_work_mem=64MB
+      -c max_connections=40
+      -c checkpoint_timeout=10min
+      -c max_wal_size=512MB
+      -c min_wal_size=80MB
+      -c random_page_cost=1.1
+      -c temp_file_limit=256MB
+      -c log_min_duration_statement=1000
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-shveya} -d ${POSTGRES_DB:-shveya}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    ports:
+      - "127.0.0.1:5432:5432" # не наружу, только локально
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: shveya_api
+    restart: unless-stopped
+    mem_limit: 1024m
+    mem_reservation: 512m
+    cpus: 1.0
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-postgresql://shveya:shveya_pass_strong@postgres:5432/shveya}
+      PYTHONUNBUFFERED: "1"
+    volumes:
+      - ./api/app:/app/app:ro
+    networks:
+      - shveya_net
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  bot:
+    build:
+      context: ./bot
+      dockerfile: Dockerfile
+    container_name: shveya_bot
+    restart: unless-stopped
+    mem_limit: 512m
+    mem_reservation: 256m
+    cpus: 0.5
+    depends_on:
+      postgres:
+        condition: service_healthy
+      api:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-postgresql://shveya:shveya_pass_strong@postgres:5432/shveya}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+      API_BASE_URL: ${API_BASE_URL:-http://api:8000}
+    volumes:
+      - ./bot/app:/app/app:ro
+    networks:
+      - shveya_net
+    healthcheck:
+      test: ["CMD-SHELL", "ps aux | grep -v grep | grep -q python || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  pgdata:
+    driver: local
+    name: shveya_pgdata
+
+networks:
+  shveya_net:
+    driver: bridge
+    name: shveya_net

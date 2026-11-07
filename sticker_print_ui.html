@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>ШВЕЯМОЗГ — FIXED FIELDS — наклейка не перечеркивает текст — Пермь</title>
+<style>
+* { box-sizing: border-box; pointer-events: auto !important; }
+body { font-family: Consolas, monospace; background: #0a0a0a; color: #00ff88; margin: 0; padding: 15px; }
+.header { background: #111; border: 2px solid #00ff88; padding: 12px; display: flex; justify-content: space-between; border-radius: 8px; }
+.badge { background: #00ff88; color: #000; padding: 3px 10px; border-radius: 12px; font-weight: bold; }
+.card { background: #111; border: 1px solid #333; padding: 12px; margin: 12px 0; border-radius: 8px; }
+.warn { color: #ffaa00; font-weight: bold; }
+.ok { color: #00ff88; }
+.grid { display: grid; grid-template-columns: 300px 1fr 320px; gap: 12px; }
+.col { background: #111; border: 1px solid #333; border-radius: 8px; padding: 12px; position: relative; z-index: 1; }
+.col h3 { color: #fff; font-size: 12px; margin: 0 0 8px 0; text-transform: uppercase; }
+button { background: #00ff88; color: #000; border: none; padding: 12px 18px; margin: 6px 0; cursor: pointer !important; font-weight: bold; border-radius: 5px; display: block; width: 100%; position: relative; z-index: 100; font-size: 13px; }
+button:hover { background: #00cc6a; }
+button.secondary { background: #222; color: #00ff88; border: 1px solid #00ff88; }
+button:disabled { background: #333; color: #666; cursor: not-allowed !important; opacity: 0.6; }
+button.ready-ok { background: #00ff88; color: #000; opacity: 1 !important; cursor: pointer !important; }
+/* FIXED FIELDS — не перечеркивают текст — как на скрине было */
+.sticker { width: 62mm; height: 42mm; border: 2px dashed #00ff88; background: #fff; color: #000; padding: 3mm; margin: 15px auto; position: relative; z-index: 1; }
+.sticker-inner { border: 1.2px solid #000; height: 100%; padding: 2.5mm; display: flex; flex-direction: column; justify-content: space-between; }
+.field { margin-bottom: 2.2mm; }
+.field-label { font-size: 8.5px; line-height: 9px; font-family: monospace; color: #000; display: block; margin-bottom: 0.8mm; }
+.field-value { font-size: 10px; font-weight: bold; line-height: 11px; font-family: monospace; color: #000; display: block; margin-bottom: 1mm; min-height: 3mm; }
+.hand-line { border-bottom: 1.2px solid #000; height: 1px; width: 100%; margin-top: 0.5mm; margin-bottom: 0; display: block; }
+.field:last-child { margin-bottom: 0; }
+.mono { font-size: 10px; }
+.small { font-size: 11px; color: #888; }
+.file { padding: 6px; cursor: pointer; border: 1px solid transparent; }
+.file:hover { background: #222; border-color: #00ff88; }
+.file.active { background: #222; border-color: #00ff88; color: #fff; }
+input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; }
+</style>
+</head>
+<body>
+<div class="header">
+<div><b>ШВЕЯМОЗГ — FIXED FIELDS — не перечеркивает</b> <span class="badge">Пермь 1 швея — БЕЗ ПРИНТЕРА</span></div>
+<div><span class="badge">Rule 7 — наклейка рукой</span></div>
+</div>
+
+<div class="card">
+<span class="warn">⚠️ FIXED: Было — поля перечеркивали текст — как на твоём скрине — Заказ №: 001 линия через буквы</span><br>
+<span class="ok">✅ Стало: Отдельная строка — label + value + пустая линия снизу для рукописи — не перечеркивает — швея пишет на пустой линии</span>
+</div>
+
+<div class="grid">
+<div class="col">
+<h3>📋 Заказы — кликай</h3>
+<div id="orderList">
+<div class="file active" onclick="selectOrder('001','Иванов','Пушкина 15-2','Брюки','PRM-2026-0001')">ORD-001 — Иванов — 2 вещи — Пушкина 15-2</div>
+<div class="file" onclick="selectOrder('002','Петрова','Ленина 10-5','Платье','PRM-2026-0003')">ORD-002 — Петрова — Ленина 10-5</div>
+<div class="file" onclick="selectOrder('003','Сидоров','Куйбышева 20','Куртка','PRM-2026-0004')">ORD-003 — Сидоров — Куйбышева 20</div>
+</div>
+<button onclick="printBlanks()">🖨️ Печать 4 бланка — CLICKABLE</button>
+<button class="secondary" onclick="printRoll()">📦 Рулон 100 бланков — отдать швее</button>
+</div>
+
+<div class="col">
+<h3>🏷️ Заготовка 58×40 — FIXED — поля не перечеркивают текст</h3>
+<div class="sticker" id="stickerPreview">
+<div class="sticker-inner">
+<div class="field">
+<span class="field-label">Заказ №:</span>
+<span class="field-value" id="sOrder">001</span>
+<span class="hand-line"></span>
+</div>
+<div class="field">
+<span class="field-label">Фамилия:</span>
+<span class="field-value" id="sFio">Иванов</span>
+<span class="hand-line"></span>
+</div>
+<div class="field">
+<span class="field-label">Адрес:</span>
+<span class="field-value" id="sAddr">Пушкина 15-2</span>
+<span class="hand-line"></span>
+</div>
+<div class="field">
+<span class="field-label">Вещь / Номер:</span>
+<span class="field-value" id="sItem">Брюки — PRM-2026-0001</span>
+<span class="hand-line" style="border-bottom-style: dashed;"></span>
+</div>
+<div style="display:flex;justify-content:space-between;margin-top:1mm"><span class="field-label" style="font-size:6px">Дата: ____/____</span><span class="field-label" style="font-size:6px">C:\Perm_Repair</span></div>
+</div>
+</div>
+
+<div class="small" style="background:#000;padding:8px;border:1px solid #333;border-radius:4px;margin-top:10px">
+<b class="ok">Как было на твоём скрине — неправильно:</b><br>
+<span style="color:#ff6666">Заказ №: 001<br>___________ линия перечеркивала текст</span><br><br>
+<b class="ok">Как стало — FIXED — правильно:</b><br>
+Заказ №:<br><b>001</b><br>___________ пустая линия ниже — для рукописи — не перечеркивает<br><br>
+Швея пишет на пустой линии — маркером — чтобы Яндекс Такси не путались
+</div>
+<button onclick="photoSticker()">📸 Фото наклейки — CLICKABLE</button>
+</div>
+
+<div class="col">
+<h3>✅ Rule 7 — FIXED CLICKABLE</h3>
+<div style="background:#000;padding:10px;border:1px solid #00ff88;border-radius:4px">
+<label style="cursor:pointer;display:flex;align-items:center;gap:8px"><input type="checkbox" id="handCheck" onchange="toggleReady()"> <b>Наклеена рукой</b></label><br>
+<label>Фото:<br><input type="file" id="photoInput" accept="image/*" onchange="photoSelected()"></label><br><br>
+<button id="readyBtn" disabled onclick="markReady()">ГОТОВО → READY (поставь галочку)</button>
+<div id="log" style="background:#000;padding:8px;font-size:11px;border:1px solid #333;border-radius:4px;margin-top:10px;max-height:100px;overflow:auto">
+[10:15] PRM-0001 — hand_applied=true — FIXED FIELDS — не перечеркивает<br>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+let hasPhoto=false;
+function selectOrder(num,fio,addr,item,prm){
+  document.querySelectorAll('.file').forEach(f=>f.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('sOrder').innerText=num;
+  document.getElementById('sFio').innerText=fio;
+  document.getElementById('sAddr').innerText=addr;
+  document.getElementById('sItem').innerText=item+' — '+prm;
+}
+function toggleReady(){
+  let chk=document.getElementById('handCheck');
+  let btn=document.getElementById('readyBtn');
+  if(chk.checked && hasPhoto){btn.disabled=false;btn.classList.add('ready-ok');btn.innerText='ГОТОВО → READY ✅ — можно жать';}
+  else if(chk.checked){btn.disabled=true;btn.innerText='ГОТОВО → READY — загрузи фото';}
+  else{btn.disabled=true;btn.classList.remove('ready-ok');btn.innerText='ГОТОВО → READY (поставь галочку)';}
+}
+function photoSelected(){hasPhoto=true;document.getElementById('log').innerHTML+='[10:20] Фото — /app/photos/PRM-.../sticker_handwrite.jpg<br>';toggleReady();}
+function markReady(){alert('✅ READY — FIXED FIELDS — не перечеркивает — is_hand_applied=true — Яндекс Такси');}
+function printBlanks(){alert('🖨️ Печать 4 бланка — FIXED FIELDS — не перечеркивает — C:\Perm_Repair');}
+function printRoll(){alert('📦 Рулон 100 — отдать швее — FIXED');}
+function photoSticker(){document.getElementById('photoInput').click();}
+console.log('FIXED FIELDS — поля не перечеркивают текст — загружено');
+</script>
+</body>
+</html>

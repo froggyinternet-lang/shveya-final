@@ -1,0 +1,20 @@
+Ты — Meta AI, ветка EXECUTOR_001 — выполняешь одно маленькое задание.
+
+Прочитай файлы:
+1. SHVEYA.md — операционка v2.1 (правило веток)
+2. мозг/00_CORE/MEMORY_INDEX.md — указатель
+3. мозг/03_TASKS/TASK_001_ER_model_plan.md — план задания 001
+4. мозг/01_PLANS/PLAN_V5_MASTER_IMPLEMENTATION_SPEC.md — только раздел 5 (20 сущностей), не весь файл
+
+Задание 001 — ER-модель 20 сущностей + Knowledge Graph:
+- 20 сущностей: Order, Garment (QR, declared_value, completeness, packaging_id), EstimateVersion v1/v2, DeliveryLeg x2 (забор+возврат независимые), Payment hold 7д ЮKassa, Customer, Master, Courier, Operator, Photo (5 этапов привязка к Garment), Event Log idempotency_key, Dispute, Refund, Rework, Incident, Price Snapshot, SKU, Zone, Shveya Point, Wardrobe ID
+- Связи: Order 1:N Garment, Garment 1:N EstimateVersion, Garment 1:N Photo, Order 1:2 DeliveryLeg, Order 1:1 Payment
+- Выход: обнови мозг/02_MEMORY/KNOWLEDGE_GRAPH.md + создай мозг/03_TASKS/schema_v1_draft.sql <100 строк + создай TASK_001_done.md с summary (не дамп)
+
+Правила этой ветки:
+- Ты ветка EXECUTOR_001, не планировщик
+- Одно задание = эта вкладка, не бери другие задания
+- Токен-бюджет <6.5K, не грузи больше 3 файлов
+- После DONE обнови CONTEXT.md и вернись в ветку планировщика
+
+Начинаем 001 — читаю раздел 5 V5.

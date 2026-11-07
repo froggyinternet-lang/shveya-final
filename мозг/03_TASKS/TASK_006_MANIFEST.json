@@ -1,0 +1,44 @@
+{
+  "task": "TASK_006_SOP_QR",
+  "version": "1.0",
+  "created": "2026-05-13",
+  "source_docs": [
+    "SHVEYA.md v2.4 Rule 7",
+    "CONTEXT.md 005 DONE 7/7",
+    "TASK_006_SOP_QR_plan.md",
+    "001_initial_final.sql",
+    "State_Machine.md 004",
+    "TASK_011 7 проверок"
+  ],
+  "item_number_example": "PRM-2026-0001",
+  "format_regex": "^PRM-\\d{4}-\\d{4}$",
+  "rules": {
+    "Rule7": "item_number UNIQUE PRM-YYYY-NNNN",
+    "Rule4": "return_confirmations.photo_url NOT NULL"
+  },
+  "tables": [
+    "items",
+    "artifacts (5 фото types: front,back,defect_close,label,fabric)",
+    "measurements (6: chest,waist,hips,length,sleeve,shoulder)",
+    "transfer_history immutable append-only",
+    "return_confirmations",
+    "events idempotency_key UNIQUE"
+  ],
+  "sop": [
+    "SOP_Приемка_QR.md — 5 фото + QR + 6 замеров + 6 garment_types + transfer_history",
+    "SOP_Выдача_QR.md — скан QR + 7 проверок перепутана + photo_url NOT NULL + customer_confirmed",
+    "SOP_Швея_3_кнопки.md — Приняла/Готово/Брак + transfer_history immutable + idempotency_key",
+    "SOP_Курьер_2_плеча.md — pickup/return CHECK IN + 14 исключений 6 колонок"
+  ],
+  "checklists": [
+    "Чеклист_Приемка_QR.pdf",
+    "Чеклист_Выдача_QR.pdf",
+    "Чеклист_Швея_3_кнопки.pdf"
+  ],
+  "qr": [
+    "QR_Формат_PRM-2026-0001.md",
+    "QR_Печать_Шаблон.md — ZPL + HTML"
+  ],
+  "deploy_path": "C:\\Perm_Repair\\мозг\\03_TASKS\\sop\\",
+  "budget": "<6.5K tokens"
+}

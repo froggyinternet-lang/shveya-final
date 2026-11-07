@@ -1,0 +1,67 @@
+# MANIFEST — C:\Perm_Repair
+
+- BRAIN.md — 9 KB
+- Document2_BizModels_A-E.md — 18 KB
+- Document6_Payments_Finmodel.md — 19 KB
+- MANIFEST.md — 3 KB
+- Perm_MVP_Blueprint.md — 11 KB
+- Perm_Moscow_Full_Plan.md — 21 KB
+- README.md — 0 KB
+- README_LOCAL_AGENT.md — 2 KB
+- TZ_Nikita_Perm.md — 11 KB
+- мозг\00_CORE\DECISIONS.md — 0 KB
+- мозг\00_CORE\ERRORS.md — 5 KB
+- мозг\00_CORE\MEMORY_INDEX.md — 2 KB
+- мозг\00_CORE\RULES_BRANCHES.md — 2 KB
+- мозг\00_CORE\SECOND_BRAIN_OS.md — 2 KB
+- мозг\00_CORE\SHVEYA.md — 1 KB
+- мозг\03_TASKS\00_AUDIT_2026_11_04.md — 6 KB
+- мозг\03_TASKS\00_TASK_LIST.md — 1 KB
+- мозг\03_TASKS\STATUS_RECOVERY.md — 4 KB
+- мозг\03_TASKS\TASK_001_ER_model_plan.md — 6 KB
+- мозг\03_TASKS\TASK_001_done.md — 2 KB
+- мозг\03_TASKS\TASK_002_courier_exceptions.md — 5 KB
+- мозг\03_TASKS\TASK_002_done.md — 3 KB
+- мозг\03_TASKS\TASK_002_state_machine_plan.md — 4 KB
+- мозг\03_TASKS\TASK_003_done.md — 3 KB
+- мозг\03_TASKS\TASK_003_event_log_price_lock_plan.md — 4 KB
+- мозг\03_TASKS\TASK_003_event_types.md — 3 KB
+- мозг\03_TASKS\TASK_003_price_lock.md — 3 KB
+- мозг\03_TASKS\TASK_004_api_contracts.md — 5 KB
+- мозг\03_TASKS\TASK_004_api_contracts_plan.md — 3 KB
+- мозг\03_TASKS\TASK_004_done.md — 4 KB
+- мозг\03_TASKS\TASK_004_qr_scan.md — 3 KB
+- мозг\03_TASKS\TASK_004_telegram_buttons.md — 2 KB
+- мозг\03_TASKS\TASK_005_client_flow.md — 3 KB
+- мозг\03_TASKS\TASK_005_courier_flow.md — 3 KB
+- мозг\03_TASKS\TASK_005_done.md — 6 KB
+- мозг\03_TASKS\TASK_005_frontend_contracts.md — 6 KB
+- мозг\03_TASKS\TASK_005_frontend_contracts_plan.md — 4 KB
+- мозг\03_TASKS\TASK_005_operator_flow.md — 4 KB
+- мозг\03_TASKS\TASK_006_done.md — 5 KB
+- мозг\03_TASKS\TASK_006_quality_gate.md — 4 KB
+- мозг\03_TASKS\TASK_006_quality_gate_plan.md — 4 KB
+- мозг\03_TASKS\TASK_006_sop_client.md — 4 KB
+- мозг\03_TASKS\TASK_006_sop_courier.md — 4 KB
+- мозг\03_TASKS\TASK_006_sop_operator.md — 4 KB
+- мозг\03_TASKS\TASK_007_anti_fraud.md — 10 KB
+- мозг\03_TASKS\TASK_007_done.md — 7 KB
+- мозг\03_TASKS\TASK_007_security_checklist.md — 8 KB
+- мозг\03_TASKS\TASK_007_security_plan.md — 6 KB
+- мозг\03_TASKS\TASK_008_declared_value.md — 9 KB
+- мозг\03_TASKS\TASK_008_done.md — 8 KB
+- мозг\03_TASKS\TASK_008_hold_capture_refund.md — 10 KB
+- мозг\03_TASKS\TASK_008_payments_plan.md — 9 KB
+- мозг\03_TASKS\TASK_009_5_photo_report.md — 10 KB
+- мозг\03_TASKS\TASK_009_analytics_plan.md — 9 KB
+- мозг\03_TASKS\TASK_009_dashboard.md — 9 KB
+- мозг\03_TASKS\TASK_009_done.md — 10 KB
+- мозг\03_TASKS\TASK_010_constitution_final.md — 39 KB
+- мозг\03_TASKS\TASK_010_done.md — 22 KB
+- мозг\03_TASKS\TASK_010_launch_checklist.md — 32 KB
+- мозг\03_TASKS\TASK_010_mvp_architecture.md — 16 KB
+- мозг\03_TASKS\TASK_010_mvp_plan.md — 3 KB
+
+## Структура мозг/
+- 00_CORE — SHVEYA.md, RULES, ERRORS
+- 03_TASKS — 001-010 done, 46 MD + 7 SQL/TXT

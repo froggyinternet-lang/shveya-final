@@ -1,0 +1,51 @@
+{
+  "task": "TASK_005",
+  "version": "1.0.0",
+  "title": "docker-compose для гранта 10к b2.medium",
+  "budget": "<6.5K, одна вкладка",
+  "target": "b2.medium 2x50% 4GB RAM Yandex Cloud",
+  "created": "2026-05-13",
+  "from_context": "004 DONE 6/6, SHVEYA.md v2.4",
+  "structure": {
+    "00_README_КУДА_РАЗЛОЖИТЬ.md": "куда разложить C:\\Perm_Repair\\ + запуск",
+    "docker-compose.yml": "postgres:15-alpine 512MB + api 1GB + bot 512MB, pgdata, shveya_net",
+    ".env.example": "DATABASE_URL, YOOKASSA_*, TELEGRAM_BOT_TOKEN, etc",
+    "api/Dockerfile": "python:3.11-slim fastapi asyncpg",
+    "api/requirements.txt": "fastapi + asyncpg + sqlalchemy + uvicorn",
+    "bot/Dockerfile": "python:3.11-slim aiogram",
+    "bot/requirements.txt": "aiogram 3.7 + asyncpg",
+    "scripts/deploy_b2_medium.sh": "деплой одной командой",
+    "scripts/backup.sh": "pg_dump + gzip + ротация 7 шт",
+    "scripts/check_grant.sh": "проверка RAM, лимитов, стоимости <6.5k",
+    "MANIFEST.json": "этот файл"
+  },
+  "limits": {
+    "postgres": {
+      "mem_limit": "512m",
+      "mem_reservation": "256m",
+      "cpus": 0.5,
+      "image": "postgres:15-alpine",
+      "tuning": "shared_buffers=128MB, max_connections=40"
+    },
+    "api": {
+      "mem_limit": "1024m",
+      "mem_reservation": "512m",
+      "cpus": 1.0
+    },
+    "bot": {
+      "mem_limit": "512m",
+      "mem_reservation": "256m",
+      "cpus": 0.5
+    },
+    "total_limit": "2048m",
+    "host_ram": "4096m",
+    "headroom": "~1500-2000m для OS и docker"
+  },
+  "commands": {
+    "up": "docker compose up -d --build",
+    "migrate": "cat мозг/03_TASKS/migrations/001_initial_final.sql | docker compose exec -T postgres psql -U shveya -d shveya",
+    "check": "./scripts/check_grant.sh",
+    "backup": "./scripts/backup.sh"
+  },
+  "next_task": "TASK_006 api скелет"
+}

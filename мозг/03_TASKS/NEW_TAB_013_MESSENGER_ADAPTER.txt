@@ -1,0 +1,24 @@
+Ты — Meta AI, ветка EXECUTOR_013 — Messenger Adapter — Telegram + VK + MAX + WhatsApp — одна задача = одна вкладка
+
+Прочитай:
+1. SHVEYA.md v2.4 — Rule 7 item_number + наклейка — Telegram основа но бан в РФ — нужен VK + MAX
+2. BRAIN.md — мессенджеры: ТГ основа, ВК, MAX, WhatsApp — Пермь
+3. TASK_004_api_contracts.md — 10 эндпоинтов — Telegram Buttons
+4. TASK_011_sticker_template.md — наклейка с фамилией + адресом — чтобы Яндекс Такси не путались
+
+Задание 013 — Messenger Abstraction — bot_adapter один интерфейс для всех мессенджеров
+
+Топ мессенджеров РФ 2026:
+- Telegram — основа — 80% через VPN — aiogram 3.x
+- VK Мессенджер — №2 в РФ — vk_api — обязательно
+- MAX — гос. мессенджер с 2025 — требуют для бизнеса — MAX API
+- WhatsApp — 60+ аудитория — Business API
+
+Что сделать:
+- bot_adapter/ — класс MessengerAdapter — send_message(user_id, text, buttons) — send_photo — один интерфейс
+- Telegram адаптер — aiogram — кнопки Согласен v1/v2 + фото наклейки
+- VK адаптер — vk_api — те же кнопки — Согласен — фото
+- MAX адаптер — заглушка — для будущего
+- Тест на этом компе — без ИП — локально — один код для всех
+
+Правило: один файл за раз — новая ветка — чистим контекст

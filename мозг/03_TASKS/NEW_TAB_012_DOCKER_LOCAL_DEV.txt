@@ -1,0 +1,18 @@
+Ты — Meta AI, ветка EXECUTOR_012 — DOCKER LOCAL DEV — одна задача = одна вкладка
+
+Прочитай:
+1. SHVEYA.md v2.4 — Constitution — Rule 7 item_number + наклейка рукой — обновлено 2026-11-05
+2. BRAIN.md — весь мозг — Пермь 1 швея, Яндекс Такси, наклейки
+3. TASK_011_qr_to_number_plan.md — миграция QR → номер
+4. TASK_010_mvp_architecture.md — архитектура — 13 таблиц, 10 API
+
+Задание 012 — LOCAL DEV Docker — всё на этом компе C:\Perm_Repair — быстрый перенос на Яндекс Cloud грант 10k — без ИП пока
+
+Что сделать:
+- docker-compose.yml — PostgreSQL 16 ru-central1 152-ФЗ + FastAPI backend + volume для фото — всё локально
+- .env.local — DATABASE_URL=localhost — для этого компа
+- .env.prod.example — для Яндекса — ru-central1 — быстрый перенос одной командой
+- Проверка: docker-compose up — 13 таблиц DDL + item_number UNIQUE + order_number + 7 правил
+
+Правило: один файл за раз — чистим контекст — важное в мозг/ — новая ветка для качества
+Токен-бюджет <6.5K — не грузи больше 3 файлов

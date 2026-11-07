@@ -1,0 +1,34 @@
+stateDiagram-v2
+    [*] --> NEW
+    NEW --> ESTIMATED: EstimateVersion v1 + фото 5 этапов\nCONSTITUTION Rule 3 price_versions
+    ESTIMATED --> AGREED: customer_agreed=true + Price Lock\nRule 4
+    ESTIMATED --> CANCELLED: клиент отказался
+    AGREED --> IN_WORK: transfer_history QR забор + payment hold operator_id\nRule 5 + Rule 2
+    AGREED --> CANCELLED: до забора
+    IN_WORK --> READY: master_done + QC + фото готово\ntransfer_history immutable
+    IN_WORK --> CANCELLED: вещь потеряна/повреждена
+    READY --> OUT_FOR_DELIVERY: delivery_leg pickup RETURN подтвержден
+    READY --> CANCELLED: клиент просит вернуть без ремонта
+    OUT_FOR_DELIVERY --> DELIVERED: delivery_leg return + фото возврата\nRule 5
+    OUT_FOR_DELIVERY --> CANCELLED: 14 исключений курьера
+    DELIVERED --> CLOSED: return_confirmations photo_url NOT NULL + customer_confirmed\nRule 4 CONSTITUTION
+    DELIVERED --> DISPUTE: клиент не подтверждает возврат
+    CLOSED --> [*]
+    CANCELLED --> [*]
+    DISPUTE --> CLOSED: оператор решил + operator_id
+    DISPUTE --> CANCELLED: возврат денег operator_id
+
+    note right of NEW
+        orders БЕЗ QR
+        Rule 7
+    end note
+    note right of IN_WORK
+        items qr_code UNIQUE NOT NULL
+        transfer_history immutable
+        Rule 5 + Rule 7
+    end note
+    note right of CLOSED
+        return_confirmations обязательна
+        photo_url NOT NULL
+        Rule 4
+    end note

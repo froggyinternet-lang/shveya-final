@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Наклейка 30x20mm - SHVEYA PRM-2026-0001</title>
+<style>
+  @page { size: 30mm 20mm; margin: 0; }
+  body { margin:0; padding:0; font-family: Arial, sans-serif; }
+  .sheet { width: 210mm; display: flex; flex-wrap: wrap; gap: 2mm; padding: 5mm; }
+  .label {
+    width: 30mm; height: 20mm;
+    border: 0.3mm dashed #999;
+    display: flex; flex-direction: row;
+    align-items: center;
+    padding: 1mm;
+    box-sizing: border-box;
+    page-break-inside: avoid;
+  }
+  .qr { width: 14mm; height: 14mm; }
+  .qr img { width: 100%; height: 100%; }
+  .text { margin-left: 1mm; font-size: 5.5pt; line-height: 1.1; overflow: hidden; }
+  .text .prm { font-weight: bold; font-size: 6.5pt; }
+  .text .type { font-size: 5pt; }
+  @media print {
+    .no-print { display: none; }
+    .sheet { padding: 0; gap: 0; }
+    .label { border: none; }
+  }
+</style>
+</head>
+<body>
+<div class="no-print" style="padding:10px;background:#f0f0f0;">
+  <h3>SHVEYA Наклейка 30x20мм — Печать PRM-2026-0001</h3>
+  <label>PRM: <input id="prm" value="PRM-2026-0001" onchange="updateAll()"></label>
+  <label>Тип: <input id="type" value="Платье" onchange="updateAll()"></label>
+  <label>Клиент: <input id="client" value="Алия" onchange="updateAll()"></label>
+  <button onclick="window.print()">🖨️ Печать 30x20</button>
+  <p>Инструкция: Chrome → Ctrl+P → Размер бумаги: 30x20 или А4 (65 на листе) → Поля: Нет → Масштаб 100% → Печать</p>
+  <p>QR генерируется без кода: https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=PRM-2026-0001</p>
+</div>
+
+<div class="sheet" id="sheet">
+  <!-- 65 наклеек для А4 или 1 для термопринтера — JS клонирует -->
+</div>
+
+<script>
+function createLabel(prm, type, client) {
+  const qrUrl = `https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=${encodeURIComponent(prm)}`;
+  return `
+  <div class="label">
+    <div class="qr"><img src="${qrUrl}" alt="QR ${prm}"></div>
+    <div class="text">
+      <div class="prm">${prm}</div>
+      <div class="type">${type}</div>
+      <div class="client">${client}</div>
+      <div style="font-size:4pt;color:#666">SHVEYA</div>
+    </div>
+  </div>`;
+}
+
+function updateAll() {
+  const prm = document.getElementById('prm').value || 'PRM-2026-0001';
+  const type = document.getElementById('type').value || 'Платье';
+  const client = document.getElementById('client').value || 'Алия';
+  const sheet = document.getElementById('sheet');
+  sheet.innerHTML = '';
+  // Для демо — 24 наклейки (4x6). Для А4 65 штук — поменяй 24 на 65
+  const count = 24;
+  for(let i=0;i<count;i++){
+    sheet.innerHTML += createLabel(prm, type, client);
+  }
+  // Для термопринтера 30x20 одна наклейка — раскомментируй:
+  // sheet.innerHTML = createLabel(prm, type, client);
+}
+updateAll();
+</script>
+</body>
+</html>
